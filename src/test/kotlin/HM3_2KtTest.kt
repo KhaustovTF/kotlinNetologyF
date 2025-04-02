@@ -173,6 +173,6 @@ class HM3_2KtTest {
 
         val result = algoritmRascheta(cardType, transfer, transferInMonth)
 
-        assertEquals(0, result)
+        assertEquals(-1, result)
     }
 }
