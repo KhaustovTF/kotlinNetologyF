@@ -1,25 +1,29 @@
+data class Posts(
+    val id: Int, val authorId: Int, val authorName: String, val content: String, val published: Long, val likes: Int
+)
+
+object WallSevice {
+
+    private var posts = emptyArray<Posts>()
+    fun add(post: Posts): Posts {
+        posts += post
+        return posts.last()
+    }
+
+    fun likeByid(id: Int) {
+        for ((index, post) in posts.withIndex()){
+            if (post.id == id) {
+                posts[index] = post.copy(likes = post.likes + 1)
+            }
+        }
+    }
+}
+
 fun main() {
-    val ItemPrice = 100
-    val ItemCount: Int = 11
-    val discount = 100
-    val discountStart = 1_000
-
-    val result = calculatePrice(userLevel = "gold", itemCount = 1)
-
-    println("Total Price: $result")
-}
-fun calculatePrice(itemCount: Int,
-                   itemPrice: Int = 100,
-                   discount: Int = 100,
-                   discountStart: Int = 1_000,
-                   userLevel:String = "normal"): Int {
-    val total = itemPrice * itemCount
-    val discounted = if (total > discountStart) total - discount else total
-    return ((1 - userLevelDiscount(userLevel)) * discounted).toInt()
-}
-
-fun userLevelDiscount(level: String = "normal") = when(level) {
-    "gold" -> 0.1
-    "silver" -> 0.05
-    else -> 0.0
+    val post = Posts(1, 1, "author", "content", likes = 0, published = 0)
+    val liked = post.copy(likes = post.likes + 1)
+    val (id, authorId, _ , content) = post
+    println("$id, $authorId, $content")
+    println(liked)
+    println(post)
 }
