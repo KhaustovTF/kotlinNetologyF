@@ -3,22 +3,20 @@ data class Post(
     val fromId: Int,
     val date: Int,
     val text: String,
-    val likes: Int,
-    val userLikes: Boolean,
     val views: Int,
     val canDelete: Boolean,
-    val markedAsAds: Boolean
+    val markedAsAds: Boolean,
+
+    val likes: Likes = Likes(0, true)
 )
 
-object WallService {
-    private var posts = emptyArray<Posts>()
+data class Likes(val count: Int, val userLikes: Boolean)
 
+
+object WallService {
 
 }
 
 fun main() {
-val post = Post(123, 321, 222, "New post!", 999, true, 1000, false, false)
-val liked = post.copy(likes = post.likes + 1)
-    println(liked)
-    println(post)
+
 }
