@@ -14,9 +14,30 @@ data class Likes(val count: Int, val userLikes: Boolean)
 
 
 object WallService {
+    private var posts = emptyArray<Post>()
+    private var unickId = 0
 
+    fun add(post: Post): Post {
+        posts += post.copy(++unickId)
+        return posts.last()
+    }
+
+    fun update(post: Post): Boolean {
+
+        return false
+    }
+
+    fun printPosts() {
+        for (post in posts){
+            print(post)
+            println()
+        }
+        println()
+    }
 }
 
 fun main() {
-
+    WallService.add(Post(1,2,3,"Post", 4, false, false))
+    WallService.add(Post(1,3,4,"Post 2", 5, false, false))
+    WallService.printPosts()
 }
