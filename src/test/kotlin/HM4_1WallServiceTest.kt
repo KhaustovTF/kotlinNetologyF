@@ -10,7 +10,7 @@ import org.junit.Assert.*
  fun add() {
  val result = WallService.add(Post(1,2,3,"Post", 4, false, false))
 
- assertEquals(1, 2, 3, "Post", 4, false, false, result)
+ assertEquals(Post(1, 2, 3, "Post", 4, false, false), result)
  }
 
 @Test

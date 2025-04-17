@@ -20,7 +20,6 @@ object WallService {
     fun add(post: Post): Post {
         posts += post.copy(++unickId, likes = post.likes.copy())
         return posts.last()
-
     }
 
     fun update(post2: Post): Boolean {
@@ -42,8 +41,8 @@ object WallService {
 }
 
 fun main() {
-    WallService.add(Post(1,2,3,"Post", 4, false, false))
+    WallService.add(Post(1,2,3,"Post", 4, false, false, Likes(30, true)))
     WallService.add(Post(1,3,4,"Post 2", 5, false, false))
-    println(WallService.update(Post(2, 3, 4, "another post!", 12, false, false)))
+    println(WallService.update(Post(2, 3, 4, "another post!", 12, false, false, Likes(31, false))))
     WallService.printPosts()
 }
