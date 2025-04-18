@@ -17,6 +17,11 @@ object WallService {
     private var posts = emptyArray<Post>()
     private var unickId = 0
 
+    fun clear(){
+        posts = emptyArray()
+        unickId == 0
+    }
+
     fun add(post: Post): Post {
         posts += post.copy(++unickId, likes = post.likes.copy())
         return posts.last()
