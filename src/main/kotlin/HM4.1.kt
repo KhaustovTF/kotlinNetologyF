@@ -50,4 +50,27 @@ fun main() {
     WallService.add(Post(1,3,4,"Post 2", 5, false, false))
     println(WallService.update(Post(2, 3, 4, "another post!", 12, false, false, Likes(31, false))))
     WallService.printPosts()
+
+    val  attachment = PhotoAttachment(Photo(1,1,""))
+}
+
+abstract class Attachment{
+    open val type: String = "11111"
+
+    open fun like() {
+
+    }
+}
+
+data class Photo(val id: Int, val ownerId: Int, val photo130: String) {
+    fun like() {
+
+    }
+}
+data class PhotoAttachment( val photo: Photo): Attachment() {
+    override val type: String = "type"
+
+    override fun like() {
+
+    }
 }
