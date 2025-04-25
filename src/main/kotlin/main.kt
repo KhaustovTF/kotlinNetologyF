@@ -1,29 +1,66 @@
-data class Posts(
-    val id: Int, val authorId: Int, val authorName: String, val content: String, val published: Long, val likes: Int
+class Posts(
+    val id: Long,
+    val authorId: Long,
+    val authorName: String,
+    val content: String,
+    val created: Long,
+    val original: Posts?,
+    open val likes: Int = 0
 )
 
-object WallSevice {
 
-    private var posts = emptyArray<Posts>()
-    fun add(post: Posts): Posts {
-        posts += post
-        return posts.last()
-    }
 
-    fun likeByid(id: Int) {
-        for ((index, post) in posts.withIndex()){
-            if (post.id == id) {
-                posts[index] = post.copy(likes = post.likes + 1)
-            }
-        }
-    }
-}
+//interface Posts {
+//    val id: Long
+//    val authorId: Long
+//    val authorName: String
+//    val content: String
+//    val created: Long
+//    val likes: Int
+//}
+//
+//class RegularPost(
+//    override val id: Long,
+//    override val authorId: Long,
+//    override val authorName: String,
+//    override val content: String,
+//    override val created: Long,
+//    override val likes: Int
+//) : Posts {
+//
+//}
+//
+//
+//class Repost(
+//    override val id: Long,
+//    override val authorId: Long,
+//    override val authorName: String,
+//    override val content: String,
+//    override val created: Long,
+//    override val likes: Int,
+//    val original: Post
+//) : Posts{
+//
+//}
+//
+//fun repost(post: Posts) {
+//    if (post !is  Repost) {
+//        return
+//    }
+//
+//    val repost = post as Repost
+//    repost.original
+//}
 
 fun main() {
-    val post = Posts(1, 1, "author", "content", likes = 0, published = 0)
-    val liked = post.copy(likes = post.likes + 1)
-    val (id, authorId, _ , content) = post
-    println("$id, $authorId, $content")
-    println(liked)
-    println(post)
+    val post = Posts(1,2,"text", "content", 0, null)
+    val repost = Posts(2,2,"text", "content", 0, post)
+
+    val array = arrayOf(post, repost)
+    var sum = 0
+    for (item in array) {
+        sum += (item.likes + (item.original?.likes ?: 0))
+    }
+    println(sum)
+    println(repost)
 }

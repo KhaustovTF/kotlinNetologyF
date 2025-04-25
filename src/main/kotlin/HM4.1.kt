@@ -2,10 +2,11 @@ data class Post(
     val id: Int,
     val fromId: Int,
     val date: Int,
-    val text: String,
-    val views: Int,
+    val text: String?,
+    val views: Int?,
     val canDelete: Boolean,
     val markedAsAds: Boolean,
+    val attachment: Attachment?,
 
     val likes: Likes = Likes(0, true)
 )
@@ -17,7 +18,7 @@ object WallService {
     private var posts = emptyArray<Post>()
     private var unickId = 0
 
-    fun clear(){
+    fun clear() {
         posts = emptyArray()
         unickId == 0
     }
@@ -28,8 +29,8 @@ object WallService {
     }
 
     fun update(post2: Post): Boolean {
-        for ((index,post) in posts.withIndex()) {
-            if (post2.id == post.id){
+        for ((index, post) in posts.withIndex()) {
+            if (post2.id == post.id) {
                 posts[index] = post2.copy(likes = post2.likes.copy())
                 return true
             }
@@ -37,8 +38,12 @@ object WallService {
         return false
     }
 
+    fun like() {
+
+    }
+
     fun printPosts() {
-        for (post in posts){
+        for (post in posts) {
             print(post)
             println()
         }
@@ -46,31 +51,61 @@ object WallService {
 }
 
 fun main() {
-    WallService.add(Post(1,2,3,"Post", 4, false, false, Likes(30, true)))
-    WallService.add(Post(1,3,4,"Post 2", 5, false, false))
-    println(WallService.update(Post(2, 3, 4, "another post!", 12, false, false, Likes(31, false))))
+    WallService.add(
+        Post(
+            1,
+            2,
+            3,
+            "Post",
+            4,
+            false,
+            false,
+            PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+            Likes(30, true)
+        )
+    )
+    WallService.add(
+        Post(
+            1,
+            3,
+            4,
+            "Post 2",
+            5,
+            false,
+            false,
+            PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+            Likes(30, true)
+        )
+    )
+    println(
+        WallService.update(
+            Post(
+                2,
+                3,
+                4,
+                "another post!",
+                12,
+                false,
+                false,
+                PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+                Likes(31, false)
+            )
+        )
+    )
     WallService.printPosts()
 
-    val  attachment = PhotoAttachment(Photo(1,1,""))
 }
 
-abstract class Attachment{
-    open val type: String = "11111"
+abstract class Attachment {
+    abstract val type: String
 
-    open fun like() {
 
-    }
 }
 
-data class Photo(val id: Int, val ownerId: Int, val photo130: String) {
-    fun like() {
+data class Photo(val id: Int, val ownerId: Int, val photo130: String, val photo604: String)
 
-    }
-}
-data class PhotoAttachment( val photo: Photo): Attachment() {
-    override val type: String = "type"
 
-    override fun like() {
+data class PhotoAttachment(val photo: Photo) : Attachment() {
+    override val type: String = "Photo"
 
-    }
 }
