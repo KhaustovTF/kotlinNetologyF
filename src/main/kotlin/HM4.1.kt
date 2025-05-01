@@ -53,6 +53,47 @@ object WallService {
 fun main() {
     WallService.add(
         Post(
+            4,
+            5,
+            6,
+            "Post",
+            7,
+            false,
+            false,
+            FileAttachment(File(1, 1, "Troyan",77,".exe")),
+            Likes(30, true)
+        )
+    )
+
+    WallService.add(
+        Post(
+            3,
+            4,
+            5,
+            "Post",
+            6,
+            false,
+            false,
+            AudioAttachment(Audio(1, 1, "Queen",77)),
+            Likes(30, true)
+        )
+    )
+
+    WallService.add(
+        Post(
+            2,
+            3,
+            4,
+            "Post",
+            5,
+            false,
+            false,
+            StickerAttachment(Sticker(1, 1, 25)),
+            Likes(30, true)
+        )
+    )
+    WallService.add(
+        Post(
             1,
             2,
             3,
@@ -73,7 +114,7 @@ fun main() {
             5,
             false,
             false,
-            PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+            VideoAttachment(Video(32, 42, "Kapibara", 700)),
             Likes(30, true)
         )
     )
@@ -102,10 +143,38 @@ abstract class Attachment {
 
 }
 
-data class Photo(val id: Int, val ownerId: Int, val photo130: String, val photo604: String)
-
 
 data class PhotoAttachment(val photo: Photo) : Attachment() {
     override val type: String = "Photo"
 
 }
+
+data class Photo(val id: Int, val ownerId: Int, val photo130: String, val photo604: String)
+
+data class VideoAttachment(val video: Video) : Attachment() {
+    override val type: String = "Video"
+
+}
+
+data class Video(val id: Int, val ownerId: Int, val name: String, val duration: Int)
+
+data class StickerAttachment(val sticker: Sticker) : Attachment() {
+    override val type: String = "Sticker"
+
+}
+
+data class Sticker(val id: Int, val ownerId: Int, val stickerId: Int)
+
+data class AudioAttachment(val audio: Audio) : Attachment() {
+    override val type: String = "Audio"
+
+}
+
+data class Audio(val id: Int, val ownerId: Int, val artist: String, val date: Int)
+
+data class FileAttachment(val file: File) : Attachment() {
+    override val type: String = "File"
+
+}
+
+data class File(val id: Int, val ownerId: Int, val title: String, val size: Int, val ext: String)
