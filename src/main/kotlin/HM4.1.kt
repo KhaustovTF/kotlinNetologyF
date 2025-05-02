@@ -1,3 +1,5 @@
+import java.util.Date
+
 data class Post(
     val id: Int,
     val fromId: Int,
@@ -10,12 +12,20 @@ data class Post(
 
     val likes: Likes = Likes(0, true)
 )
+data class Comment(
+    val id: Int,
+    val fromId: Int,
+    val text: String?,
+    val date: Int
+)
 
 data class Likes(val count: Int, val userLikes: Boolean)
 
+class PostNotFoundException(message:String): Exception(message)
 
 object WallService {
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
     private var unickId = 0
 
     fun clear() {
@@ -38,8 +48,14 @@ object WallService {
         return false
     }
 
-    fun like() {
-
+    fun createComment(postId: Int, comment: Comment): Comment{
+        for (post in posts){
+            if (post.id == postId){
+                comments += comment
+                return comment
+            }
+        }
+        throw PostNotFoundException("Post with id: ${postId} is not found")
     }
 
     fun printPosts() {
@@ -134,6 +150,16 @@ fun main() {
         )
     )
     WallService.printPosts()
+
+
+    try {
+        val comment = WallService.createComment(22, Comment(1,2,"perviy", 333))
+        println(comment)
+    } catch (e: PostNotFoundException){
+        println(e.message)
+    }
+
+
 
 }
 

@@ -2,6 +2,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+private const val i = 2
+
 class HM4_1WallServiceTest {
 
     private var posts = emptyArray<Post>()
@@ -11,6 +13,9 @@ class HM4_1WallServiceTest {
     fun clearBeforeTest() {
         WallService.clear()
     }
+
+
+
 
     @Test
     fun add() {
@@ -68,6 +73,21 @@ class HM4_1WallServiceTest {
         )
 
         assertEquals(false, result)
+    }
+
+    @Test
+    fun createCommentGood(){
+
+        val result = WallService.createComment(3, Comment(2,3,"perviy", 333))
+        assertEquals(WallService.createComment(3, Comment(2,3,"perviy", 333)), result)
+    }
+
+
+    @Test(expected = PostNotFoundException::class)
+    fun shouldThrow() {
+        val result = WallService.createComment(2, Comment(2,2,"perviy", 333))
+
+        assertEquals(PostNotFoundException("Post with id is not found"),result)
     }
 }
 
