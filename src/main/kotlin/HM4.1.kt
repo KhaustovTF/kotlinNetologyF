@@ -21,20 +21,25 @@ data class Comment(
 
 data class Likes(val count: Int, val userLikes: Boolean)
 
+
+
 class PostNotFoundException(message:String): Exception(message)
 
 object WallService {
     private var posts = emptyArray<Post>()
     private var comments = emptyArray<Comment>()
-    private var unickId = 0
+    private var unickId = 1
+
+    fun getUnickId () = unickId
 
     fun clear() {
         posts = emptyArray()
-        unickId == 0
+        unickId = 1
     }
 
     fun add(post: Post): Post {
-        posts += post.copy(++unickId, likes = post.likes.copy())
+        posts += post
+        unickId++
         return posts.last()
     }
 
@@ -69,7 +74,7 @@ object WallService {
 fun main() {
     WallService.add(
         Post(
-            4,
+            WallService.getUnickId(),
             5,
             6,
             "Post",
@@ -83,7 +88,7 @@ fun main() {
 
     WallService.add(
         Post(
-            3,
+            WallService.getUnickId(),
             4,
             5,
             "Post",
@@ -97,7 +102,7 @@ fun main() {
 
     WallService.add(
         Post(
-            2,
+            WallService.getUnickId(),
             3,
             4,
             "Post",
@@ -110,7 +115,7 @@ fun main() {
     )
     WallService.add(
         Post(
-            1,
+            WallService.getUnickId(),
             2,
             3,
             "Post",
@@ -123,7 +128,7 @@ fun main() {
     )
     WallService.add(
         Post(
-            1,
+            WallService.getUnickId(),
             3,
             4,
             "Post 2",
@@ -137,7 +142,7 @@ fun main() {
     println(
         WallService.update(
             Post(
-                2,
+                3,
                 3,
                 4,
                 "another post!",

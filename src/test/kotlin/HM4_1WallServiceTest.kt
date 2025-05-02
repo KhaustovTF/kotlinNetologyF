@@ -15,8 +15,6 @@ class HM4_1WallServiceTest {
     }
 
 
-
-
     @Test
     fun add() {
         val result = WallService.add(
@@ -38,13 +36,13 @@ class HM4_1WallServiceTest {
     fun updateRealId() {
         WallService.add(
             Post(
-                1, 3, 4, "Post", 5, false, false, PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+                2, 3, 4, "Post", 5, false, false, PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
                 Likes(30, true)
             )
         )
         val result = WallService.update(
             Post(
-                1,
+                2,
                 3,
                 4,
                 "another post!",
@@ -67,27 +65,31 @@ class HM4_1WallServiceTest {
 //   WallService.add(Post(1,3,4,"Post", 5,false,false))
         val result = WallService.update(
             Post(
-                2, 3, 4, "Post", 5, false, false, PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+                WallService.getUnickId(), 3, 4, "Post", 5, false, false, PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
                 Likes(30, true)
             )
         )
-
         assertEquals(false, result)
     }
 
     @Test
-    fun createCommentGood(){
-
-        val result = WallService.createComment(3, Comment(2,3,"perviy", 333))
-        assertEquals(WallService.createComment(3, Comment(2,3,"perviy", 333)), result)
+    fun createCommentGood() {
+        WallService.add(
+            Post(
+                3, 3, 4, "Post", 5, false, false, PhotoAttachment(Photo(1, 1, "sdada", "assdassd")),
+                Likes(30, true)
+            )
+        )
+        val result = WallService.createComment(3, Comment(2, 3, "perviy", 333))
+        assertEquals(WallService.createComment(3, Comment(2, 3, "perviy", 333)), result)
     }
 
 
     @Test(expected = PostNotFoundException::class)
     fun shouldThrow() {
-        val result = WallService.createComment(2, Comment(2,2,"perviy", 333))
+        val result = WallService.createComment(2, Comment(2, 2, "perviy", 333))
 
-        assertEquals(PostNotFoundException("Post with id is not found"),result)
+        assertEquals(PostNotFoundException("Post with id is not found"), result)
     }
 }
 
